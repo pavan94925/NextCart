@@ -9,7 +9,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent'
 import { getCurrentUser } from '@/lib/drizzle/sessions'
 import { redirect } from 'next/navigation'
 import Navbar from '@/components/Navbar'
-import BannerCarousel  from '@/components/BannerCarousel'
+import BannerCarousel from '@/components/BannerCarousel'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,7 +25,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Use Navbar component instead of custom nav */}
-      <Navbar user={user} />
+      <Navbar />
 
       <main className="flex-1">
         {/* Hero Section */}
