@@ -1,11 +1,11 @@
-import { Container, Typography } from '@mui/material'
-import CartList from '@/components/cart/CartList'
-import CartSummary from '@/components/cart/CartSummary'
-import Button from '@/components/ui/Button'
-import Link from 'next/link'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Container, Typography } from "@mui/material";
+import CartList from "@/components/cart/CartList";
+import CartSummary from "@/components/cart/CartSummary";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default function CartPage() {
   return (
@@ -28,7 +28,7 @@ export default function CartPage() {
         <div>
           <CartSummary />
         </div>
-      </div> 
+      </div>
     </Container>
-  )
+  );
 }

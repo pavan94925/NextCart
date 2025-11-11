@@ -1,26 +1,26 @@
-import { Container, Typography, Box } from '@mui/material'
-import ProductGrid from '@/components/products/ProductGrid'
-import Button from '@/components/ui/Button'
-import Link from 'next/link'
-import StorefrontIcon from '@mui/icons-material/Storefront'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping'
-import SecurityIcon from '@mui/icons-material/Security'
-import SupportAgentIcon from '@mui/icons-material/SupportAgent'
-import { getCurrentUser } from '@/lib/drizzle/sessions'
-import { redirect } from 'next/navigation'
-import Navbar from '@/components/Navbar'
-import BannerCarousel from '@/components/BannerCarousel'
+import { Container, Typography, Box } from "@mui/material";
+import ProductGrid from "@/components/products/ProductGrid";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import SecurityIcon from "@mui/icons-material/Security";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import { getCurrentUser } from "@/lib/drizzle/sessions";
+import { redirect } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import BannerCarousel from "@/components/BannerCarousel";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/login')
+    redirect("/login");
   }
 
-  const featuredProducts = []
+  const featuredProducts = [];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -166,5 +166,5 @@ export default async function DashboardPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

@@ -47,9 +47,7 @@
         "user_profiles_email_unique": {
           "name": "user_profiles_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},

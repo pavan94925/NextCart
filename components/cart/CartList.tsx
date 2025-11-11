@@ -1,46 +1,46 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Typography } from '@mui/material'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import CartItem from './CartItem'
-import Button from '@/components/ui/Button'
-import { CartItem as CartItemType } from '@/types'
-import { getCartFromStorage, saveCartToStorage } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { useState, useEffect } from "react";
+import { Typography } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CartItem from "./CartItem";
+import Button from "@/components/ui/Button";
+import { CartItem as CartItemType } from "@/types";
+import { getCartFromStorage, saveCartToStorage } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function CartList() {
-  const [cart, setCart] = useState<CartItemType[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+  const [cart, setCart] = useState<CartItemType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    setCart(getCartFromStorage())
-    setIsLoading(false)
-  }, [])
+    setCart(getCartFromStorage());
+    setIsLoading(false);
+  }, []);
 
   const handleUpdateQuantity = (id: number, quantity: number) => {
-    const validQuantity = Math.max(1, quantity)
+    const validQuantity = Math.max(1, quantity);
     const updatedCart = cart.map((item) => {
       if (item.id === id) {
-        return { ...item, quantity: Math.min(validQuantity, item.stock) }
+        return { ...item, quantity: Math.min(validQuantity, item.stock) };
       }
-      return item
-    })
-    setCart(updatedCart)
-    saveCartToStorage(updatedCart)
-    window.dispatchEvent(new Event('storage'))
-    router.refresh()
-  }
+      return item;
+    });
+    setCart(updatedCart);
+    saveCartToStorage(updatedCart);
+    window.dispatchEvent(new Event("storage"));
+    router.refresh();
+  };
 
   const handleRemove = (id: number) => {
-    const updatedCart = cart.filter((item) => item.id !== id)
-    setCart(updatedCart)
-    saveCartToStorage(updatedCart)
-    window.dispatchEvent(new Event('storage'))
-    router.refresh()
-  }
+    const updatedCart = cart.filter((item) => item.id !== id);
+    setCart(updatedCart);
+    saveCartToStorage(updatedCart);
+    window.dispatchEvent(new Event("storage"));
+    router.refresh();
+  };
 
   if (isLoading) {
     return (
@@ -49,7 +49,7 @@ export default function CartList() {
           Loading cart...
         </Typography>
       </div>
-    )
+    );
   }
 
   if (cart.length === 0) {
@@ -71,13 +71,13 @@ export default function CartList() {
           </Button>
         </Link>
       </div>
-    )
+    );
   }
 
   return (
     <div>
       <Typography variant="h6" className="mb-4 text-gray-600">
-        {cart.length} {cart.length === 1 ? 'item' : 'items'} in your cart
+        {cart.length} {cart.length === 1 ? "item" : "items"} in your cart
       </Typography>
       {cart.map((item) => (
         <CartItem
@@ -88,5 +88,5 @@ export default function CartList() {
         />
       ))}
     </div>
-  )
+  );
 }

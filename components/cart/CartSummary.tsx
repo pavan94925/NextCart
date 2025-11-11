@@ -1,45 +1,49 @@
-'use client'
+"use client";
 
-import { CardContent, Typography, Divider, Chip } from '@mui/material'
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping'
-import Card from '@/components/ui/Card'
-import Button from '@/components/ui/Button'
-import { formatPrice } from '@/lib/utils'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { CardContent, Typography, Divider, Chip } from "@mui/material";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import { formatPrice } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 type CartItem = {
-  id: string
-  name?: string
-  price: number
-  quantity: number
-}
+  id: string;
+  name?: string;
+  price: number;
+  quantity: number;
+};
 
 function useCart() {
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     try {
-      const raw = typeof window !== 'undefined' ? localStorage.getItem('cart') : null
-      const parsed = raw ? (JSON.parse(raw) as CartItem[]) : []
-      setCart(parsed)
+      const raw =
+        typeof window !== "undefined" ? localStorage.getItem("cart") : null;
+      const parsed = raw ? (JSON.parse(raw) as CartItem[]) : [];
+      setCart(parsed);
     } catch {
-      setCart([])
+      setCart([]);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [])
+  }, []);
 
-  const itemCount = cart.reduce((sum, item) => sum + (item.quantity || 0), 0)
-  const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 0), 0)
+  const itemCount = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+  const total = cart.reduce(
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
+    0,
+  );
 
-  return { cart, total, itemCount, isLoading }
+  return { cart, total, itemCount, isLoading };
 }
 
 export default function CartSummary() {
-  const { cart, total, itemCount, isLoading } = useCart()
+  const { cart, total, itemCount, isLoading } = useCart();
 
   if (isLoading) {
     return (
@@ -48,17 +52,17 @@ export default function CartSummary() {
           <Typography>Loading...</Typography>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (cart.length === 0) {
-    return null
+    return null;
   }
 
-  const subtotal = total
-  const tax = total * 0.1 // 10% tax
-  const shippingCost = subtotal >= 50 ? 0 : 10 // Free shipping over $50
-  const grandTotal = subtotal + tax + shippingCost
+  const subtotal = total;
+  const tax = total * 0.1; // 10% tax
+  const shippingCost = subtotal >= 50 ? 0 : 10; // Free shipping over $50
+  const grandTotal = subtotal + tax + shippingCost;
 
   return (
     <Card className="sticky top-24 shadow-xl">
@@ -70,7 +74,7 @@ export default function CartSummary() {
         <div className="space-y-3 mb-4">
           <div className="flex justify-between items-center">
             <Typography variant="body1">
-              Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'items'})
+              Subtotal ({itemCount} {itemCount === 1 ? "item" : "items"})
             </Typography>
             <Typography variant="body1" className="font-semibold">
               {formatPrice(subtotal)}
@@ -156,5 +160,5 @@ export default function CartSummary() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

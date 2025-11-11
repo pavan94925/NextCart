@@ -1,15 +1,15 @@
-import { CardContent, Typography, Chip, Divider, Box } from '@mui/material'
-import Card from '@/components/ui/Card'
-import { Product } from '@/types'
-import { formatPrice } from '@/lib/utils'
-import AddToCart from '@/components/cart/AddToCart'
-import Image from 'next/image'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping'
-import SecurityIcon from '@mui/icons-material/Security'
-import ReplayIcon from '@mui/icons-material/Replay'
+import { CardContent, Typography, Chip, Divider, Box } from "@mui/material";
+import Card from "@/components/ui/Card";
+import { Product } from "@/types";
+import { formatPrice } from "@/lib/utils";
+import AddToCart from "@/components/cart/AddToCart";
+import Image from "next/image";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import SecurityIcon from "@mui/icons-material/Security";
+import ReplayIcon from "@mui/icons-material/Replay";
 
 interface ProductDetailsProps {
-  product: Product
+  product: Product;
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
@@ -64,9 +64,9 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           </Typography>
           <Chip
             label={
-              product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'
+              product.stock > 0 ? `${product.stock} in stock` : "Out of stock"
             }
-            color={product.stock > 0 ? 'success' : 'error'}
+            color={product.stock > 0 ? "success" : "error"}
             variant="outlined"
           />
         </div>
@@ -120,5 +120,5 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </Box>
       </div>
     </div>
-  )
+  );
 }

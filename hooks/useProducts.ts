@@ -1,33 +1,33 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Product } from '@/types'
+import { useState, useEffect } from "react";
+import { Product } from "@/types";
 
 export function useProducts() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch('/api/products')
-        if (!response.ok) throw new Error('Failed to fetch products')
-        const data = await response.json()
-        setProducts(data)
+        const response = await fetch("/api/products");
+        if (!response.ok) throw new Error("Failed to fetch products");
+        const data = await response.json();
+        setProducts(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred')
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
 
-    fetchProducts()
-  }, [])
+    fetchProducts();
+  }, []);
 
   return {
     products,
     isLoading,
     error,
-  }
+  };
 }

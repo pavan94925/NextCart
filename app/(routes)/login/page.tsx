@@ -1,87 +1,87 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { loginUser } from '@/app/actions/authActions'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { loginUser } from "@/app/actions/authActions";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   type Errors = {
-    email?: string
-    password?: string
-  }
-  const [errors, setErrors] = useState<Errors>({})
-  const [isLoading, setIsLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const router = useRouter()
+    email?: string;
+    password?: string;
+  };
+  const [errors, setErrors] = useState<Errors>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const isValidEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  }
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   const validateForm = () => {
-    const newErrors: Errors = {}
+    const newErrors: Errors = {};
 
     if (!email) {
-      newErrors.email = 'Email is required'
+      newErrors.email = "Email is required";
     } else if (!isValidEmail(email)) {
-      newErrors.email = 'Please enter a valid email address'
+      newErrors.email = "Please enter a valid email address";
     }
 
     if (!password) {
-      newErrors.password = 'Password is required'
+      newErrors.password = "Password is required";
     } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters long'
+      newErrors.password = "Password must be at least 6 characters long";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleLogin = async (e: any) => {
-    e.preventDefault()
-    setMessage('')
-    setErrors({})
+    e.preventDefault();
+    setMessage("");
+    setErrors({});
 
     if (!validateForm()) {
-      setMessage('Please fix the errors below')
-      return
+      setMessage("Please fix the errors below");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      const result = await loginUser({ email, password })
+      const result = await loginUser({ email, password });
 
       if (result.success) {
-        setMessage('Login successful!')
-        router.push('/dashboard')
-        router.refresh()
+        setMessage("Login successful!");
+        router.push("/dashboard");
+        router.refresh();
       } else {
-        setMessage(result.message || 'Login failed. Please try again.')
+        setMessage(result.message || "Login failed. Please try again.");
       }
     } catch (error) {
-      setMessage('Something went wrong. Please try again.')
+      setMessage("Something went wrong. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleEmailChange = (e: any) => {
-    setEmail(e.target.value.toLowerCase())
+    setEmail(e.target.value.toLowerCase());
     if (errors.email) {
-      setErrors({ ...errors, email: '' })
+      setErrors({ ...errors, email: "" });
     }
-  }
+  };
 
   const handlePasswordChange = (e: any) => {
-    setPassword(e.target.value)
+    setPassword(e.target.value);
     if (errors.password) {
-      setErrors({ ...errors, password: '' })
+      setErrors({ ...errors, password: "" });
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -104,7 +104,7 @@ export default function LoginPage() {
                 <input
                   type="email"
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
+                    errors.email ? "border-red-500" : "border-gray-300"
                   }`}
                   placeholder="you@example.com"
                   value={email}
@@ -123,9 +123,9 @@ export default function LoginPage() {
                 </label>
                 <div className="relative">
                   <input
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     className={`w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 ${
-                      errors.password ? 'border-red-500' : 'border-gray-300'
+                      errors.password ? "border-red-500" : "border-gray-300"
                     }`}
                     placeholder="••••••••"
                     value={password}
@@ -137,7 +137,7 @@ export default function LoginPage() {
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-orange-600 hover:text-orange-600 cursor-pointer"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? 'Hide' : 'Show'}
+                    {showPassword ? "Hide" : "Show"}
                   </button>
                 </div>
                 {errors.password && (
@@ -151,17 +151,17 @@ export default function LoginPage() {
                 disabled={isLoading}
                 className={`w-full text-white font-bold py-3 rounded-lg ${
                   isLoading
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-orange-600 hover:bg-orange-600'
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-orange-600 hover:bg-orange-600"
                 }`}
               >
-                {isLoading ? 'Logging in...' : 'Login'}
+                {isLoading ? "Logging in..." : "Login"}
               </button>
 
               {/* Links */}
               <div className="text-center space-y-3">
                 <p className="text-sm text-gray-600">
-                  Forgot your password?{' '}
+                  Forgot your password?{" "}
                   <a
                     href="/forgot-password"
                     className="text-orange-600 underline hover:text-orange-800"
@@ -171,7 +171,7 @@ export default function LoginPage() {
                 </p>
 
                 <p className="text-sm text-gray-600">
-                  Don't have an account?{' '}
+                  Don't have an account?{" "}
                   <a
                     href="/register"
                     className="text-orange-600 underline hover:text-orange-600"
@@ -185,9 +185,9 @@ export default function LoginPage() {
               {message && (
                 <p
                   className={`text-center font-semibold ${
-                    message.includes('successful')
-                      ? 'text-green-600'
-                      : 'text-red-600'
+                    message.includes("successful")
+                      ? "text-green-600"
+                      : "text-red-600"
                   }`}
                 >
                   {message}
@@ -198,5 +198,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

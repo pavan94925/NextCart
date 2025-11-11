@@ -4,16 +4,16 @@ import {
   Typography,
   Chip,
   CardActions,
-} from '@mui/material'
-import Link from 'next/link'
-import Card from '@/components/ui/Card'
-import Button from '@/components/ui/Button'
-import { Product } from '@/types'
-import { formatPrice } from '@/lib/utils'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+} from "@mui/material";
+import Link from "next/link";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import { Product } from "@/types";
+import { formatPrice } from "@/lib/utils";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 interface ProductCardProps {
-  product: Product
+  product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -66,9 +66,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           </Typography>
 
           <Chip
-            label={product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
+            label={product.stock > 0 ? `${product.stock} left` : "Out of stock"}
             size="small"
-            color={product.stock > 0 ? 'success' : 'error'}
+            color={product.stock > 0 ? "success" : "error"}
             variant="filled"
           />
         </div>
@@ -83,10 +83,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             startIcon={<ShoppingCartIcon />}
             size="large"
           >
-            {product.stock > 0 ? 'View Details' : 'Out of Stock'}
+            {product.stock > 0 ? "View Details" : "Out of Stock"}
           </Button>
         </Link>
       </CardActions>
     </Card>
-  )
+  );
 }

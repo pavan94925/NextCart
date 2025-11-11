@@ -1,11 +1,11 @@
-import { Container, Typography } from '@mui/material'
-import { getProducts } from '@/app/actions/products'
-import ProductGrid from '@/components/products/ProductGrid'
+import { Container, Typography } from "@mui/material";
+import { getProducts } from "@/app/actions/products";
+import ProductGrid from "@/components/products/ProductGrid";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default async function ProductsPage() {
-  const products = await getProducts()
+  const products = await getProducts();
 
   return (
     <Container maxWidth="xl" className="py-8">
@@ -17,5 +17,5 @@ export default async function ProductsPage() {
       </Typography>
       <ProductGrid products={products} />
     </Container>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   CardContent,
@@ -7,19 +7,19 @@ import {
   IconButton,
   TextField,
   Box,
-} from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
-import Card from '@/components/ui/Card'
-import { CartItem as CartItemType } from '@/types'
-import { formatPrice } from '@/lib/utils'
-import Link from 'next/link'
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import Card from "@/components/ui/Card";
+import { CartItem as CartItemType } from "@/types";
+import { formatPrice } from "@/lib/utils";
+import Link from "next/link";
 
 interface CartItemProps {
-  item: CartItemType
-  onUpdateQuantity: (id: number, quantity: number) => void
-  onRemove: (id: number) => void
+  item: CartItemType;
+  onUpdateQuantity: (id: number, quantity: number) => void;
+  onRemove: (id: number) => void;
 }
 
 export default function CartItem({
@@ -29,15 +29,15 @@ export default function CartItem({
 }: CartItemProps) {
   const handleIncrease = () => {
     if (item.quantity < item.stock) {
-      onUpdateQuantity(item.id, item.quantity + 1)
+      onUpdateQuantity(item.id, item.quantity + 1);
     }
-  }
+  };
 
   const handleDecrease = () => {
     if (item.quantity > 1) {
-      onUpdateQuantity(item.id, item.quantity - 1)
+      onUpdateQuantity(item.id, item.quantity - 1);
     }
-  }
+  };
 
   return (
     <Card className="mb-4 hover:shadow-lg transition-shadow">
@@ -95,7 +95,7 @@ export default function CartItem({
             inputProps={{
               min: 1,
               max: item.stock,
-              style: { textAlign: 'center' },
+              style: { textAlign: "center" },
             }}
             size="small"
             className="w-16"
@@ -130,5 +130,5 @@ export default function CartItem({
         </IconButton>
       </CardContent>
     </Card>
-  )
+  );
 }
