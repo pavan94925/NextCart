@@ -1,10 +1,10 @@
-import { Grid2 as Grid, Typography } from '@mui/material'
-import ProductCard from './ProductCard'
-import { Product } from '@/types'
-import InventoryIcon from '@mui/icons-material/Inventory'
+import { Grid2 as Grid, Typography } from "@mui/material";
+import ProductCard from "./ProductCard";
+import { Product } from "@/types";
+import InventoryIcon from "@mui/icons-material/Inventory";
 
 interface ProductGridProps {
-  products: Product[]
+  products: Product[];
 }
 
 export default function ProductGrid({ products }: ProductGridProps) {
@@ -19,7 +19,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
           Check back later for new products!
         </Typography>
       </div>
-    )
+    );
   }
 
   return (
@@ -30,5 +30,5 @@ export default function ProductGrid({ products }: ProductGridProps) {
         </Grid>
       ))}
     </Grid>
-  )
+  );
 }

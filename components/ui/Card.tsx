@@ -1,9 +1,9 @@
-import { Card as MUICard, CardProps } from '@mui/material'
-import { cn } from '@/lib/utils'
+import { Card as MUICard, CardProps } from "@mui/material";
+import { cn } from "@/lib/utils";
 
 interface CustomCardProps extends CardProps {
-  className?: string
-  children: React.ReactNode
+  className?: string;
+  children: React.ReactNode;
 }
 
 export default function Card({
@@ -15,10 +15,10 @@ export default function Card({
   return (
     <MUICard
       elevation={elevation}
-      className={cn('rounded-xl border border-gray-200', className)}
+      className={cn("rounded-xl border border-gray-200", className)}
       {...props}
     >
       {children}
     </MUICard>
-  )
+  );
 }

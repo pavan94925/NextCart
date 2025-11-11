@@ -1,73 +1,73 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { resetPassword } from '@/app/actions/authActions'
-import { useRouter } from 'next/navigation'
-import { Eye, EyeOff } from 'lucide-react'
+import { useState } from "react";
+import { resetPassword } from "@/app/actions/authActions";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function ResetPasswordPage() {
-  const [email, setEmail] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [message, setMessage] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
 
- const handleSubmit = async (e: React.FormEvent) => {
-   e.preventDefault()
-   setMessage('') // Clear previous errors
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage(""); // Clear previous errors
 
-   const trimmedEmail = email.trim()
-   const trimmedPassword = newPassword.trim()
-   const trimmedConfirm = confirmPassword.trim()
+    const trimmedEmail = email.trim();
+    const trimmedPassword = newPassword.trim();
+    const trimmedConfirm = confirmPassword.trim();
 
-   // Email validation
-   if (!trimmedEmail) {
-     setMessage('Email is required')
-     return
-   } else if (!/^\S+@\S+\.\S+$/.test(trimmedEmail)) {
-     setMessage('Enter a valid email address')
-     return
-   }
+    // Email validation
+    if (!trimmedEmail) {
+      setMessage("Email is required");
+      return;
+    } else if (!/^\S+@\S+\.\S+$/.test(trimmedEmail)) {
+      setMessage("Enter a valid email address");
+      return;
+    }
 
-   // Password validation
-   if (!trimmedPassword) {
-     setMessage('Password is required')
-     return
-   } else if (trimmedPassword.length < 6) {
-     setMessage('Password must be at least 6 characters long')
-     return
-   } else if (!/[A-Z]/.test(trimmedPassword)) {
-     setMessage('Password must contain at least one uppercase letter')
-     return
-   } else if (!/[a-z]/.test(trimmedPassword)) {
-     setMessage('Password must contain at least one lowercase letter')
-     return
-   } else if (!/[0-9]/.test(trimmedPassword)) {
-     setMessage('Password must contain at least one number')
-     return
-   } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(trimmedPassword)) {
-     setMessage('Password must contain at least one special character')
-     return
-   }
+    // Password validation
+    if (!trimmedPassword) {
+      setMessage("Password is required");
+      return;
+    } else if (trimmedPassword.length < 6) {
+      setMessage("Password must be at least 6 characters long");
+      return;
+    } else if (!/[A-Z]/.test(trimmedPassword)) {
+      setMessage("Password must contain at least one uppercase letter");
+      return;
+    } else if (!/[a-z]/.test(trimmedPassword)) {
+      setMessage("Password must contain at least one lowercase letter");
+      return;
+    } else if (!/[0-9]/.test(trimmedPassword)) {
+      setMessage("Password must contain at least one number");
+      return;
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(trimmedPassword)) {
+      setMessage("Password must contain at least one special character");
+      return;
+    }
 
-   // Confirm password validation
-   if (trimmedPassword !== trimmedConfirm) {
-     setMessage('Passwords do not match')
-     return
-   }
+    // Confirm password validation
+    if (trimmedPassword !== trimmedConfirm) {
+      setMessage("Passwords do not match");
+      return;
+    }
 
-   // Submit request
-   const res = await resetPassword(trimmedEmail, trimmedPassword)
+    // Submit request
+    const res = await resetPassword(trimmedEmail, trimmedPassword);
 
-   if (res.success) {
-     alert('Password reset successfully!')
-     router.push('/login')
-   } else {
-     setMessage(res.error || 'Reset failed')
-   }
- }
+    if (res.success) {
+      alert("Password reset successfully!");
+      router.push("/login");
+    } else {
+      setMessage(res.error || "Reset failed");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -86,7 +86,7 @@ export default function ResetPasswordPage() {
 
           <div className="relative">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="New password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -104,7 +104,7 @@ export default function ResetPasswordPage() {
 
           <div className="relative">
             <input
-              type={showConfirmPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="Re-type new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -133,5 +133,5 @@ export default function ResetPasswordPage() {
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -1,60 +1,60 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { getCartItemsCount } from '@/app/actions/cart'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { getCartItemsCount } from "@/app/actions/cart";
 
 export default function Navbar() {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [cartItemsCount, setCartItemsCount] = useState(0)
-  const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const pathname = usePathname();
+  const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Fetch cart count only once when component mounts
   useEffect(() => {
     const fetchCartCount = async () => {
       try {
-        const count = await getCartItemsCount()
-        setCartItemsCount(count)
+        const count = await getCartItemsCount();
+        setCartItemsCount(count);
       } catch (error) {
-        console.error('Error fetching cart count:', error)
-        setCartItemsCount(0)
+        console.error("Error fetching cart count:", error);
+        setCartItemsCount(0);
       }
-    }
-    fetchCartCount()
-  }, []) // Empty dependency array - runs only once
+    };
+    fetchCartCount();
+  }, []); // Empty dependency array - runs only once
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
+    setMobileOpen(!mobileOpen);
+  };
 
   const handleLogout = async () => {
-    setIsLoggingOut(true)
+    setIsLoggingOut(true);
     try {
       // Clear cookies on client side
       document.cookie =
-        'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+        "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
       // Wait a moment for cookie to clear
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       // Redirect to login page
-      router.push('/login')
-      router.refresh()
+      router.push("/login");
+      router.refresh();
     } catch (error) {
-      console.error('Logout error:', error)
+      console.error("Logout error:", error);
     } finally {
-      setIsLoggingOut(false)
+      setIsLoggingOut(false);
     }
-  }
+  };
 
   const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Products', href: '/products' },
-    { label: 'Cart', href: '/cart' },
-  ]
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products" },
+    { label: "Cart", href: "/cart" },
+  ];
 
   return (
     <>
@@ -99,7 +99,7 @@ export default function Navbar() {
               <Link
                 href="/"
                 className={`no-underline text-black hover:opacity-80 transition-opacity ${
-                  pathname === '/' ? 'font-bold underline' : ''
+                  pathname === "/" ? "font-bold underline" : ""
                 }`}
               >
                 Home
@@ -108,7 +108,7 @@ export default function Navbar() {
               <Link
                 href="/products"
                 className={`no-underline text-black hover:opacity-80 transition-opacity ${
-                  pathname === '/products' ? 'font-bold underline' : ''
+                  pathname === "/products" ? "font-bold underline" : ""
                 }`}
               >
                 Products
@@ -163,7 +163,7 @@ export default function Navbar() {
                     Logging out...
                   </>
                 ) : (
-                  'Logout'
+                  "Logout"
                 )}
               </button>
             </div>
@@ -229,14 +229,14 @@ export default function Navbar() {
                   href={item.href}
                   className={`block py-3 px-4 rounded-lg mb-2 no-underline ${
                     pathname === item.href
-                      ? 'bg-orange-100 text-orange-700 font-bold'
-                      : 'text-black hover:bg-gray-100'
+                      ? "bg-orange-100 text-orange-700 font-bold"
+                      : "text-black hover:bg-gray-100"
                   }`}
                   onClick={handleDrawerToggle}
                 >
                   <div className="flex items-center justify-between">
                     <span>{item.label}</span>
-                    {item.label === 'Cart' && cartItemsCount > 0 && (
+                    {item.label === "Cart" && cartItemsCount > 0 && (
                       <span className="bg-orange-700 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
                         {cartItemsCount}
                       </span>
@@ -251,12 +251,12 @@ export default function Navbar() {
                 disabled={isLoggingOut}
                 className="w-full mt-4 bg-orange-700 text-white px-4 py-3 rounded-lg font-medium hover:bg-orange-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-center flex items-center justify-center gap-2"
               >
-                {isLoggingOut ? 'Logging out...' : 'Logout'}
+                {isLoggingOut ? "Logging out..." : "Logout"}
               </button>
             </div>
           </div>
         </div>
       )}
     </>
-  )
+  );
 }

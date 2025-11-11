@@ -1,66 +1,65 @@
-
-"use client"
-import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+"use client";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function BannerCarousel() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const banners = [
     {
       id: 1,
-      title: 'Flight Bookings',
-      subtitle: 'Up to 35% Off',
-      code: 'CODE: FLYMH',
-      bgGradient: 'from-orange-600 to-blue-800',
-      image: '✈️',
-      partner: 'Malaysia Airlines',
+      title: "Flight Bookings",
+      subtitle: "Up to 35% Off",
+      code: "CODE: FLYMH",
+      bgGradient: "from-orange-600 to-blue-800",
+      image: "✈️",
+      partner: "Malaysia Airlines",
     },
     {
       id: 2,
-      title: 'Electronics Sale',
-      subtitle: 'Up to 50% Off',
-      code: 'CODE: TECH50',
-      bgGradient: 'from-orange-600 to-pink-600',
-      image: '📱',
-      partner: 'Samsung & Apple',
+      title: "Electronics Sale",
+      subtitle: "Up to 50% Off",
+      code: "CODE: TECH50",
+      bgGradient: "from-orange-600 to-pink-600",
+      image: "📱",
+      partner: "Samsung & Apple",
     },
     {
       id: 3,
-      title: 'Fashion Festival',
-      subtitle: 'Flat 40% Off',
-      code: 'CODE: STYLE40',
-      bgGradient: 'from-orange-500 to-red-600',
-      image: '👗',
-      partner: 'Top Brands',
+      title: "Fashion Festival",
+      subtitle: "Flat 40% Off",
+      code: "CODE: STYLE40",
+      bgGradient: "from-orange-500 to-red-600",
+      image: "👗",
+      partner: "Top Brands",
     },
     {
       id: 4,
-      title: 'Home Appliances',
-      subtitle: 'Up to 45% Off',
-      code: 'CODE: HOME45',
-      bgGradient: 'from-orange-600 to-teal-600',
-      image: '🏠',
-      partner: 'Best Deals',
+      title: "Home Appliances",
+      subtitle: "Up to 45% Off",
+      code: "CODE: HOME45",
+      bgGradient: "from-orange-600 to-teal-600",
+      image: "🏠",
+      partner: "Best Deals",
     },
-  ]
+  ];
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % banners.length)
-  }
+    setCurrentSlide((prev) => (prev + 1) % banners.length);
+  };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length)
-  }
+    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
+  };
 
   const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-  }
+    setCurrentSlide(index);
+  };
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 5000)
-    return () => clearInterval(timer)
-  }, [])
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="relative w-full h-[250px] overflow-hidden rounded-xl shadow-2xl">
@@ -119,13 +118,13 @@ export default function BannerCarousel() {
             onClick={() => goToSlide(index)}
             className={`w-3 h-3 rounded-full transition-all ${
               currentSlide === index
-                ? 'bg-white w-8'
-                : 'bg-white/50 hover:bg-white/70'
+                ? "bg-white w-8"
+                : "bg-white/50 hover:bg-white/70"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
     </div>
-  )
+  );
 }

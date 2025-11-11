@@ -1,41 +1,41 @@
-import { Container } from '@mui/material'
-import { notFound } from 'next/navigation'
-import { getProductById } from '@/app/actions/products'
-import ProductDetails from '@/components/products/ProductDetails'
-import Button from '@/components/ui/Button'
-import Link from 'next/link'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Container } from "@mui/material";
+import { notFound } from "next/navigation";
+import { getProductById } from "@/app/actions/products";
+import ProductDetails from "@/components/products/ProductDetails";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 interface ProductPageProps {
   params: Promise<{
-    id: string
-  }>
+    id: string;
+  }>;
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
-  const { id } = await params
-  const product = await getProductById(parseInt(id))
+  const { id } = await params;
+  const product = await getProductById(parseInt(id));
 
   if (!product) {
     return {
-      title: 'Product Not Found',
-    }
+      title: "Product Not Found",
+    };
   }
 
   return {
     title: `${product.name} - NextCart`,
     description: product.description,
-  }
+  };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { id } = await params
-  const product = await getProductById(parseInt(id))
+  const { id } = await params;
+  const product = await getProductById(parseInt(id));
 
   if (!product) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -48,5 +48,5 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <ProductDetails product={product} />
     </Container>
-  )
+  );
 }

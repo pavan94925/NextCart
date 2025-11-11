@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { Container, Typography, Paper } from '@mui/material'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import Button from '@/components/ui/Button'
-import Link from 'next/link'
-import { useEffect } from 'react'
-import { saveCartToStorage } from '@/lib/utils'
+import { Container, Typography, Paper } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
+import { useEffect } from "react";
+import { saveCartToStorage } from "@/lib/utils";
 
 export default function CheckoutPage() {
   useEffect(() => {
     // Clear cart after successful checkout
-    saveCartToStorage([])
-  }, [])
+    saveCartToStorage([]);
+  }, []);
 
   return (
     <Container maxWidth="sm" className="py-16">
@@ -51,5 +51,5 @@ export default function CheckoutPage() {
         </div>
       </Paper>
     </Container>
-  )
+  );
 }

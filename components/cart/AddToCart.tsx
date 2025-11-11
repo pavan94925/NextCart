@@ -1,62 +1,62 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { TextField, CircularProgress, Alert, Snackbar } from '@mui/material'
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import Button from '@/components/ui/Button'
-import { Product } from '@/types'
-import { getCartFromStorage, saveCartToStorage } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { TextField, CircularProgress, Alert, Snackbar } from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Button from "@/components/ui/Button";
+import { Product } from "@/types";
+import { getCartFromStorage, saveCartToStorage } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface AddToCartProps {
-  product: Product
+  product: Product;
 }
 
 export default function AddToCart({ product }: AddToCartProps) {
-  const [quantity, setQuantity] = useState(1)
-  const [isAdding, setIsAdding] = useState(false)
-  const [showSuccess, setShowSuccess] = useState(false)
-  const router = useRouter()
+  const [quantity, setQuantity] = useState(1);
+  const [isAdding, setIsAdding] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const router = useRouter();
 
   const handleAddToCart = async () => {
-    setIsAdding(true)
+    setIsAdding(true);
 
     try {
-      const cart = getCartFromStorage()
-      const existingItem = cart.find((item: any) => item.id === product.id)
+      const cart = getCartFromStorage();
+      const existingItem = cart.find((item: any) => item.id === product.id);
 
-      let updatedCart
+      let updatedCart;
       if (existingItem) {
         updatedCart = cart.map((item: any) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
-            : item
-        )
+            : item,
+        );
       } else {
-        updatedCart = [...cart, { ...product, quantity }]
+        updatedCart = [...cart, { ...product, quantity }];
       }
 
-      saveCartToStorage(updatedCart)
+      saveCartToStorage(updatedCart);
 
       // Show success message
-      setShowSuccess(true)
+      setShowSuccess(true);
 
       // Trigger navbar update
-      window.dispatchEvent(new Event('storage'))
+      window.dispatchEvent(new Event("storage"));
 
       // Refresh to update cart count
-      router.refresh()
+      router.refresh();
     } catch (error) {
-      console.error('Error adding to cart:', error)
+      console.error("Error adding to cart:", error);
     } finally {
-      setIsAdding(false)
+      setIsAdding(false);
     }
-  }
+  };
 
   const handleQuantityChange = (value: string) => {
-    const num = parseInt(value) || 1
-    setQuantity(Math.max(1, Math.min(product.stock, num)))
-  }
+    const num = parseInt(value) || 1;
+    setQuantity(Math.max(1, Math.min(product.stock, num)));
+  };
 
   return (
     <>
@@ -86,7 +86,7 @@ export default function AddToCart({ product }: AddToCartProps) {
           disabled={product.stock === 0 || isAdding}
           className="flex-1"
         >
-          {isAdding ? 'Adding...' : 'Add to Cart'}
+          {isAdding ? "Adding..." : "Add to Cart"}
         </Button>
       </div>
 
@@ -95,17 +95,17 @@ export default function AddToCart({ product }: AddToCartProps) {
         open={showSuccess}
         autoHideDuration={3000}
         onClose={() => setShowSuccess(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Alert
           onClose={() => setShowSuccess(false)}
           severity="success"
           variant="filled"
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
           Product added to cart successfully!
         </Alert>
       </Snackbar>
     </>
-  )
+  );
 }
