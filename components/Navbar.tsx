@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { getCartItemsCount } from '@/app/actions/cart'
 
 export default function Navbar() {
   const pathname = usePathname()
+  const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [cartItemsCount, setCartItemsCount] = useState(0)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   // Fetch cart count only once when component mounts
   useEffect(() => {
@@ -28,6 +30,26 @@ export default function Navbar() {
     setMobileOpen(!mobileOpen)
   }
 
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      // Clear cookies on client side
+      document.cookie =
+        'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+
+      // Wait a moment for cookie to clear
+      await new Promise((resolve) => setTimeout(resolve, 100))
+
+      // Redirect to login page
+      router.push('/login')
+      router.refresh()
+    } catch (error) {
+      console.error('Logout error:', error)
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
+
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Products', href: '/products' },
@@ -37,18 +59,18 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className="bg-blue-600 text-white shadow-sm border-b sticky top-0 z-50">
+      <nav className="bg-white text-orange-500 shadow-sm border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <Link
               href="/"
-              className="no-underline text-white flex items-center gap-2 hover:opacity-80 transition-opacity"
+              className="no-underline text-orange-500 flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
               <svg
                 className="w-8 h-8"
                 fill="none"
-                stroke="currentColor"
+                stroke="black"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -64,11 +86,19 @@ export default function Navbar() {
               <span className="text-xl font-bold sm:hidden">NC</span>
             </Link>
 
+            <div className="hidden md:flex flex-1 justify-center px-6">
+              <input
+                type="text"
+                placeholder="Search products..."
+                className="w-full max-w-md px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-6">
               <Link
                 href="/"
-                className={`no-underline text-white hover:opacity-80 transition-opacity ${
+                className={`no-underline text-black hover:opacity-80 transition-opacity ${
                   pathname === '/' ? 'font-bold underline' : ''
                 }`}
               >
@@ -77,19 +107,19 @@ export default function Navbar() {
 
               <Link
                 href="/products"
-                className={`no-underline text-white hover:opacity-80 transition-opacity ${
+                className={`no-underline text-black hover:opacity-80 transition-opacity ${
                   pathname === '/products' ? 'font-bold underline' : ''
                 }`}
               >
                 Products
               </Link>
 
-              <Link href="/cart" className="no-underline text-white relative">
+              <Link href="/cart" className="no-underline text-black relative">
                 <div className="flex items-center gap-1 hover:opacity-80 transition-opacity">
                   <svg
                     className="w-6 h-6"
                     fill="none"
-                    stroke="currentColor"
+                    stroke="black"
                     viewBox="0 0 24 24"
                   >
                     <path
@@ -100,23 +130,53 @@ export default function Navbar() {
                     />
                   </svg>
                   {cartItemsCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-orange-700 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {cartItemsCount}
                     </span>
                   )}
                 </div>
               </Link>
+
+              {/* Logout Button - Desktop */}
+              <button
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="bg-white text-black border border-black px-4 py-2 rounded-lg font-medium hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+              >
+                {isLoggingOut ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Logging out...
+                  </>
+                ) : (
+                  'Logout'
+                )}
+              </button>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={handleDrawerToggle}
-              className="md:hidden p-2 text-white hover:bg-blue-700 rounded"
+              className="md:hidden p-2 text-black hover:bg-gray-200 rounded transition-colors"
             >
               <svg
                 className="w-6 h-6"
                 fill="none"
-                stroke="currentColor"
+                stroke="black"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -134,24 +194,22 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
-          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black bg-opacity-50"
             onClick={handleDrawerToggle}
           />
 
-          {/* Drawer */}
           <div className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg">
             <div className="flex items-center justify-between p-4 border-b">
-              <span className="text-lg font-bold">Menu</span>
+              <span className="text-lg font-bold text-black">Menu</span>
               <button
                 onClick={handleDrawerToggle}
-                className="p-2 hover:bg-gray-100 rounded"
+                className="p-2 hover:bg-gray-100 rounded text-black"
               >
                 <svg
                   className="w-6 h-6"
                   fill="none"
-                  stroke="currentColor"
+                  stroke="black"
                   viewBox="0 0 24 24"
                 >
                   <path
@@ -171,21 +229,30 @@ export default function Navbar() {
                   href={item.href}
                   className={`block py-3 px-4 rounded-lg mb-2 no-underline ${
                     pathname === item.href
-                      ? 'bg-blue-100 text-blue-600 font-bold'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'bg-orange-100 text-orange-700 font-bold'
+                      : 'text-black hover:bg-gray-100'
                   }`}
                   onClick={handleDrawerToggle}
                 >
                   <div className="flex items-center justify-between">
                     <span>{item.label}</span>
                     {item.label === 'Cart' && cartItemsCount > 0 && (
-                      <span className="bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                      <span className="bg-orange-700 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
                         {cartItemsCount}
                       </span>
                     )}
                   </div>
                 </Link>
               ))}
+
+              {/* Logout Button - Mobile */}
+              <button
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="w-full mt-4 bg-orange-700 text-white px-4 py-3 rounded-lg font-medium hover:bg-orange-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-center flex items-center justify-center gap-2"
+              >
+                {isLoggingOut ? 'Logging out...' : 'Logout'}
+              </button>
             </div>
           </div>
         </div>
