@@ -28,7 +28,7 @@ export default function CartPage() {
         <div>
           <CartSummary />
         </div>
-      </div>
+      </div> 
     </Container>
   )
 }

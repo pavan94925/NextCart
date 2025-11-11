@@ -6,8 +6,37 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import { formatPrice } from '@/lib/utils'
-import { useCart } from '@/hooks/useCart'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+
+type CartItem = {
+  id: string
+  name?: string
+  price: number
+  quantity: number
+}
+
+function useCart() {
+  const [cart, setCart] = useState<CartItem[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    try {
+      const raw = typeof window !== 'undefined' ? localStorage.getItem('cart') : null
+      const parsed = raw ? (JSON.parse(raw) as CartItem[]) : []
+      setCart(parsed)
+    } catch {
+      setCart([])
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
+  const itemCount = cart.reduce((sum, item) => sum + (item.quantity || 0), 0)
+  const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 0), 0)
+
+  return { cart, total, itemCount, isLoading }
+}
 
 export default function CartSummary() {
   const { cart, total, itemCount, isLoading } = useCart()
