@@ -54,7 +54,7 @@ export interface ProductFilters {
   sortBy?: "price-asc" | "price-desc" | "name-asc" | "name-desc" | "newest";
 }
 
-// Pagination types
+
 export interface PaginationParams {
   page: number;
   limit: number;
