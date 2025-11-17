@@ -21,7 +21,7 @@ export interface Cart {
   itemCount: number;
 }
 
-// Order types
+
 export interface Order {
   id: string;
   items: CartItem[];
@@ -38,7 +38,7 @@ export interface User {
   createdAt: string;
 }
 
-// API Response types
+
 export interface ApiResponse<T> {
   data?: T;
   error?: string;
