@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getCartItemsCount } from "@/app/actions/cart";
 
-export default function Navbar() {
+export default function Navbar({user}: {user: any}) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
