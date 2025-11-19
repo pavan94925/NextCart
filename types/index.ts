@@ -1,4 +1,4 @@
-
+// Product types
 export interface Product {
   id: number;
   name: string;
@@ -10,7 +10,7 @@ export interface Product {
   created_at?: string;
 }
 
-
+// Cart types
 export interface CartItem extends Product {
   quantity: number;
 }
@@ -30,7 +30,7 @@ export interface Order {
   createdAt: string;
 }
 
-
+// User types (for future auth implementation)
 export interface User {
   id: string;
   email: string;
@@ -45,7 +45,7 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-
+// Filter types
 export interface ProductFilters {
   category?: string;
   minPrice?: number;
