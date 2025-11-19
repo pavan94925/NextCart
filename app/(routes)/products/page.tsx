@@ -2,7 +2,7 @@ import { Container, Typography } from "@mui/material";
 import { getProducts } from "@/app/actions/products";
 import ProductGrid from "@/components/products/ProductGrid";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default async function ProductsPage() {
   const products = await getProducts();

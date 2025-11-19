@@ -1,29 +1,31 @@
-import { Container, Typography, Box } from '@mui/material'
-import ProductGrid from '@/components/products/ProductGrid'
-import Button from '@/components/ui/Button'
-import Link from 'next/link'
-import StorefrontIcon from '@mui/icons-material/Storefront'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping'
-import SecurityIcon from '@mui/icons-material/Security'
-import SupportAgentIcon from '@mui/icons-material/SupportAgent'
-import { getCurrentUser } from '@/lib/drizzle/sessions'
-import { redirect } from 'next/navigation'
-import Navbar from '@/components/Navbar'
-import BannerCarousel from '@/components/BannerCarousel'
+import { Container, Typography, Box } from "@mui/material";
+import ProductGrid from "@/components/products/ProductGrid";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import SecurityIcon from "@mui/icons-material/Security";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import { getCurrentUser } from "@/lib/drizzle/sessions";
+import { redirect } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import BannerCarousel from "@/components/BannerCarousel";
 
-// Force dynamic page in Next.js 16
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/login')
+    redirect("/login");
   }
+
+  const featuredProducts = [];
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar user={user} />
+      {/* Use Navbar component instead of custom nav */}
+      <Navbar />
 
       <main className="flex-1">
         {/* Hero Section */}
@@ -50,7 +52,6 @@ export default async function DashboardPage() {
                   On orders over $50
                 </Typography>
               </div>
-
               <div className="text-center">
                 <SecurityIcon
                   sx={{ fontSize: 60 }}
@@ -64,7 +65,6 @@ export default async function DashboardPage() {
                   100% secure transactions
                 </Typography>
               </div>
-
               <div className="text-center">
                 <SupportAgentIcon
                   sx={{ fontSize: 60 }}
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
           </Container>
         </Box>
 
-        {/* Coming Soon Section */}
+        {/* Featured Products Section */}
         <Container maxWidth="xl" className="py-12">
           <Typography
             variant="h3"
@@ -91,7 +91,6 @@ export default async function DashboardPage() {
           >
             Coming Soon
           </Typography>
-
           <Typography
             variant="body1"
             color="text.secondary"
@@ -116,7 +115,7 @@ export default async function DashboardPage() {
         </Container>
       </main>
 
-      {/* Footer */}
+      {/* Footer Section */}
       <footer className="bg-gray-800 text-white py-8 mt-auto">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -126,7 +125,6 @@ export default async function DashboardPage() {
                 Your one-stop shop for all your needs. Built with Next.js 16.
               </p>
             </div>
-
             <div>
               <h6 className="font-bold text-lg mb-4">Quick Links</h6>
               <div className="flex flex-col gap-2">
@@ -150,7 +148,6 @@ export default async function DashboardPage() {
                 </a>
               </div>
             </div>
-
             <div>
               <h6 className="font-bold text-lg mb-4">Contact</h6>
               <p className="opacity-80 text-sm">
@@ -160,14 +157,14 @@ export default async function DashboardPage() {
               </p>
             </div>
           </div>
-
           <div className="border-t border-gray-700 mt-8 pt-6 text-center">
             <p className="opacity-70 text-sm">
-              © 2024 NextCart. Built with ❤️ using Next.js 16.
+              © 2024 NextCart. All rights reserved. Built with ❤️ using Next.js
+              16
             </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }

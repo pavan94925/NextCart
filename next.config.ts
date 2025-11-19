@@ -1,10 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // New Next.js 16 features
-  cacheComponents: true,   // Enables explicit component caching
-  reactCompiler: true,     // Enables automatic memoization (better performance)
-
   images: {
     remotePatterns: [
       {
@@ -14,6 +10,10 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+  },
+  // Enable Turbopack for faster builds (Next.js 16 feature)
+  experimental: {
+    turbo: {},
   },
 };
 
