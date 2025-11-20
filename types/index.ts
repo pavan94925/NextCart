@@ -61,3 +61,4 @@ export interface PaginationParams {
   total: number;
   totalPages: number;
 }
+//types 
